@@ -46,6 +46,8 @@ public class Manager : MonoBehaviour
 	
     void Awake()
     {
+		Screen.SetResolution(405, 325, false);
+		
 		tick = 0;
 		
 		cam = Camera.main;
@@ -83,16 +85,17 @@ public class Manager : MonoBehaviour
 		spawnEnemyInterval = 3f;
 		spawnEnemyPosition = new Vector2(-6.5f,0);
 		spawnEnemyForce = new Vector2(0,0);
-    }
-	
-	void Start() {
+		
 		startButton.GetComponent<Button>().onClick.AddListener(PlayGame);
 		gameOverButton.GetComponent<Button>().onClick.AddListener(ReturnTitle);
-	}
+    }
 
     // Update is called once per frame
     void Update()
     {
+		if (Input.GetKey("escape")) {
+			Application.Quit();
+		}
         if (CurrentUI == "Title") {
 			HUDUI.SetActive(false);
 			GameOverUI.SetActive(false);
@@ -119,11 +122,11 @@ public class Manager : MonoBehaviour
 		if (player.activeSelf) {
 			if (playerIFrame > 0f) {
 				playerIFrame -= Time.deltaTime;
-				playerSR.color = new Color(1f,0f,0f,Mathf.Round((playerIFrame*10)%2));
+				playerSR.color = new Color(1f,1f,1f,Mathf.Round((playerIFrame*10)%2));
 			} 
 			else {
 				playerIFrame = 0f;
-				playerSR.color = new Color(1f,0f,0f,1f);
+				playerSR.color = new Color(1f,1f,1f,1f);
 			}
 		}
     }
@@ -136,27 +139,27 @@ public class Manager : MonoBehaviour
 				case 10:
 					level = 1;
 					overallEnemySpeed = 0.1f;
-					spawnEnemyInterval = 3f;
+					spawnEnemyInterval = 2f;
 					break;
 				case 20:
 					level = 2;
 					overallEnemySpeed = 0.2f;
-					spawnEnemyInterval = 2.5f;
+					spawnEnemyInterval = 1f;
 					break;
 				case 30:
 					level = 3;
 					overallEnemySpeed = 0.4f;
-					spawnEnemyInterval = 2f;
+					spawnEnemyInterval = 0.9f;
 					break;
 				case 50:
 					level = 4;
-					overallEnemySpeed = 0.7f;
-					spawnEnemyInterval = 1.5f;
+					overallEnemySpeed = 0.6f;
+					spawnEnemyInterval = 0.7f;
 					break;
 				case 80:
 					level = 5;
-					overallEnemySpeed = 1f;
-					spawnEnemyInterval = 1f;
+					overallEnemySpeed = 0.8f;
+					spawnEnemyInterval = 0.5f;
 					break;
 				default:
 					break;
@@ -252,7 +255,7 @@ public class Manager : MonoBehaviour
 		player.SetActive(false);
 		gameOverText.text = "GAME OVER";
 		gameOverText.text += "\n" + "\n" + "Level: " + level;
-		gameOverText.text += "\n" + "Enemies: " + enemyList.Count;
+		gameOverText.text += "\n" + "Total Blocks: " + enemyList.Count;
 		CurrentUI = "GameOver";
 	}
 	
