@@ -13,9 +13,12 @@ public class EnemyCollision : MonoBehaviour
 		Physics.IgnoreLayerCollision(8,8);
 	}
 	
-    void OnCollisionEnter2D(Collision2D collision) {
+    void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.gameObject.tag == "Player") {
-			GameManager.EndGame();
+			bool canHurt = GameManager.HurtPlayer();
+			if (canHurt) {
+				Destroy(gameObject);
+			}
 		}
 	}
 }
