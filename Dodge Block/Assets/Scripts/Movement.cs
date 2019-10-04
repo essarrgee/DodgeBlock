@@ -6,15 +6,13 @@ public class Movement : MonoBehaviour
 {
 	public float speed;
 	
-	private RigidBody2D rb;
+	private Rigidbody2D rb;
 	private Vector2 inputDir;
-	
-    // Start is called before the first frame update
+
     void Awake()
     {
-        speed = 15f;
-		
-		rb = this.GetComponent<RigidBody2D>;
+        speed = 8f;
+		rb = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -23,7 +21,10 @@ public class Movement : MonoBehaviour
         inputDir.x = Input.GetAxisRaw("Horizontal");
 		inputDir.y = Input.GetAxisRaw("Vertical");
 		inputDir = inputDir.normalized;
-		
-		rb.MovePosition(inputDir);
     }
+	
+	void FixedUpdate() {
+		rb.MovePosition(rb.position+inputDir*speed*Time.fixedDeltaTime);
+	}
+	
 }
