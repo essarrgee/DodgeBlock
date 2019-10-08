@@ -46,7 +46,7 @@ public class Manager : MonoBehaviour
 	
     void Awake()
     {
-		Screen.SetResolution(405, 325, false);
+		//Screen.SetResolution(405, 325, false);
 		
 		tick = 0;
 		
